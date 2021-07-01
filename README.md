@@ -8,18 +8,18 @@ Source : <a href="https://www.kaggle.com/arjunbhasin2013/ccdata">Credit Card Dat
 
 ---
 
-# I. Problem Statement
-## 1. Background
-Credit card business competition is very tight. Customers can easily switch to another credit card that has lower overall fees. According to <a href="https://www.dbmarketing.com/articles/Art175.htm">How to Retain a Credit Card Customer</a>, it costs about 80 dollars to get a new credit card customer who would returns about 120 dollars a year in profit to the company only if they keep the card. If he drops the card after a few weeks or doesn't use the card, the company will lose the customer acquisition cost (CAC) plus some more money when trying to reactivate them. In addition, Financial Publishing Services also state in their <a href="https://www.fpsc.com/The_Cost_of_Customer_Churn.pdfresearch">research</a> that CAC is estimated at five times the rate of retaining existing ones. It clearly shows that every credit card issuer must put their best effort to retain their customers. The right retention strategy can increase the company's chances of retaining its customers and further reduce the estimated loss that will be cover by the company. 
+# I. Business Understanding
+## 1. Background and Problem Statement
+Credit card business competition is very tight. Customers can easily switch to another credit card that has lower overall fees. According to <a href="https://www.dbmarketing.com/articles/Art175.htm">How to Retain a Credit Card Customer</a>, it costs about $80 to get a new credit card customer who would returns about $120 a year in profit to the company only if they keep the card. If he drops the card after a few weeks or doesn't use the card, the company will lose the customer acquisition cost (CAC) plus some more money when trying to reactivate them. In addition, Financial Publishing Services also state in their <a href="https://www.fpsc.com/The_Cost_of_Customer_Churn.pdfresearch">research</a> that CAC is estimated at five times the rate of retaining existing ones. It clearly shows that every credit card issuer must put their best effort to retain their customers. The right retention strategy can increase the company's chances of retaining its customers and further reduce the estimated loss that will be cover by the company. 
 
-Customer loyalty is a key factor to keep . We can increase the loyalty of our customers by understanding their needs first. Personalization can give better results for customer retention
-
+Customer loyalty is a key factor to keep. We can increase the loyalty of our customers by understanding their needs first. Personalization can give better results for customer retention
 
 PWDK Bank is one of the credit card issuers in USA. Currently the company only has one type of credit card. In order to serve customers better, the company plan to release new types of credit card based on customer's needs. In this project, we position ourselves as part of the Data Scientist team at PWDK Bank. We were assigned to the marketing division to segment credit card users based on credit card usage in the last 6 months. 
 
-The expected output of this project is a customer cluster based on current data and situation using ML. However, due to our time, budget, and data constraints, we limit the ability of our model in this project to predict outputs for clusters only, because more detailed information requires more data.
+Bagaimana segmentasi pengguna kartu kredit dapat?
+Apa manfaat segmentasi terhadap pengembangan produk kartu kredit? 
   
-## 2. Business Objectives
+## 2. Business Objective
 
 The business objectives that we want to achieve through this project are as follows:
 - Create credit card customer segmentations based on their credit card usage.
@@ -85,23 +85,25 @@ Below is the definition of each features:
 ---
 
 # III. Exploratory Data Analysis
+
 ## Data Distribution Plot
 - Overall, each feature has right-skewed distribution because of the anomaly behaviors of the small proportion of customers. 
 - Majority of customers have `BALANCE` value close to zero. It can be concluded that the company has many active customers
 - Not many customers can make full payments on their credit card bills (the largest percentage of `PRC_FULL_PAYMENT` is on zero value)
+
 <img src="Images/histogram.svg" alt="Balance, Purchases, and Full Payment Percentage Histogram"/>
+<img src="Images/boxplot.svg" alt="Balance, Purchases, and Full Payment Percentage Boxplot"/>
 
-[Boxplot BALANCE, PURCHASE, PRC_FULL_PAYMENTS]
 ## Data Correlation
-- `PURCHASES` has strong positive relationship with `PURCHASES_FREQUENCY`, `PURCHASES_TRX`, `ONEOFF`, `INSTALLMENTS`, `ONEOFF_FREQUENCY`, and `INSTALLMENTS_FREQUENCY`. It shows that the high value of `PURCHASES` are influenced by the number of transactions and frequency. The `ONEOF
+- `PURCHASES` has a strong positive relationship with `PURCHASES_FREQUENCY` and `PURCHASES_TRX`. `CASH_ADVANCE` has a strong positive relationship with `CASH_ADVANCE_FREQUENCY` and `CASH_ADVANCE_TRX`. Both results show that the high value of `PURCHASES` and 'CASH_ADVANCE` is influenced by the number of transactions and frequency.
+- `PURCHASES` also has strong positive relationship with `ONEOFF`, `INSTALLMENTS`, `ONEOFF_FREQUENCY`, and `INSTALLMENTS_FREQUENCY`. If we add the value of `ONEOFF` and `INSTALLMENTS` columns, we will get the same value with the PURCHASES column.
 
-Besarnya pembelian yang dilakukan oleh credit card user dipengaruhi oleh jumlah transaksi dan frekuensinya. Nilai `PURCHASES` merupakan penjumlahan pembelian yang dilakukan baik secara `ONEOFF` maupun `INSTALLMENTS` sehingga ketiga variabel tersebut memiliki korelasi positif yang kuat.
-- `CASH_ADVANCE` has strong positive relationship with `CASH_ADVANCE_FREQUENCY` and `CASH_ADVANCE_TRX`.
-[Heatmap Spearman]
+<img src="Images/heatmap.svg" alt="Spearman Heatmap" width=600 height=600/>
+
 ## Identify Missing Values, Duplicates, and Outlier 
 - There is no duplicate on this dataset.
 - There are 313 missing values on `MINIMUM_PAYMENTS` and 1 missing value on `CREDIT_LIMIT`.
-- There are many outliers for each feature and we decided not to apply any process to them 
+- There are many outliers for each feature and we decided not to apply any process to them.
 
 ---
 
@@ -136,7 +138,7 @@ The main evaluation metrics that we used are **Silhouette Score** and **WCSS (Wi
 ## Features Selection
 We want to create clustering model that has high interpretability. We only focused on some features that have significant impact to the cluster results. by checking the importance of each features to each clusters.
 
-1. Cluster the dataset using all features and evaluate the results of the clustering for each cluster algorithm
+1. Cluster the dataset using all features and evaluate the clustering results for each cluster algorithm
 2. Select the optimal number of cluster for each cluster algorithm
 3. Generate violinplot for each feature with the number of cluster selected and evaluate the potential significant features visually
 4. Create a new dataset by adding the clustering result to the initial dataset
@@ -145,33 +147,27 @@ We want to create clustering model that has high interpretability. We only focus
 7. Predict the test set labels outcome with the selected classification machine learning model and make sure it has good evaluation score
 8. Generate the feature_importances from the model and analyze it for each cluster algorithm
 
-[Feature Importances Images]
+<img src="Images/feature_importances.svg" alt="Features Importances"/>
 
 Based on features selection results, we selected 3 features that have significant impact on defining credit card customers cluster:
 - `CREDIT LIMIT`
 - `BALANCE`
 - `PAYMENTS`
 
-## Cluster Results
-1. K-Means
-2. Agglomerative
-3. Gaussian Mixture Models
+We create a new segmentation using K-Means, Agglomerative Clustering, and Gaussian Mixture Models
 
 ## Cluster Analysis
-Below is the **Clustering Visualization** result for the [Clustering Algorithm Selected]:<br>
-[Scatter Matrix Images]
+Below is the clustering visualization result using **Agglomerative Clustering (Ward Linkage)**:<br>
+<img src="Images/scatter_matrix.svg" alt="Scatter Matrix Ward"/>
 [PCA 2D Visualization]
-[3D Visualization]
+<img src="Images/3d_viz.png" alt="3D Visualization"/>
+
+From cluster resuls above, we can conclude:
+- **CLUSTER 0**: This cluster consist of 80% credit card customers who have **LOW `BALANCES`**, **LOW `PAYMENTS`**, and **LOW `CREDIT_LIMIT`**.
+
+- **CLUSTER 1**: This cluster consist of 80% credit card customers who have LOW `BALANCES`, LOW `PAYMENTS`, and LOW `CREDIT_LIMIT`.
+- **CLUSTER 2**: This cluster consist of 80% credit card customers who have LOW `BALANCES`, LOW `PAYMENTS`, and LOW `CREDIT_LIMIT`.
 
 ---
  
 # VI. Recommendation
-
-
-
-### REFERENCES 
-https://www.dbmarketing.com/articles/Art175.htm
-
-
-
-    
