@@ -87,6 +87,7 @@ Below is the definition of each features:
 # III. Exploratory Data Analysis
 
 ## Data Distribution Plot
+We check data distribution for each feature using descriptive statistics, histogram, and boxplot.
 - Overall, each feature has right-skewed distribution because of the anomaly behaviors of the small proportion of customers. 
 - Majority of customers have `BALANCE` value close to zero. It can be concluded that the company has many active customers
 - Not many customers can make full payments on their credit card bills (the largest percentage of `PRC_FULL_PAYMENT` is on zero value)
@@ -95,10 +96,11 @@ Below is the definition of each features:
 <img src="Images/boxplot.svg" alt="Balance, Purchases, and Full Payment Percentage Boxplot"/>
 
 ## Data Correlation
+We calculate Spearman's correlation coefficient for each pair of features and show the result on a heatmap.
 - `PURCHASES` has a strong positive relationship with `PURCHASES_FREQUENCY` and `PURCHASES_TRX`. `CASH_ADVANCE` has a strong positive relationship with `CASH_ADVANCE_FREQUENCY` and `CASH_ADVANCE_TRX`. Both results show that the high value of `PURCHASES` and 'CASH_ADVANCE` is influenced by the number of transactions and frequency.
 - `PURCHASES` also has strong positive relationship with `ONEOFF`, `INSTALLMENTS`, `ONEOFF_FREQUENCY`, and `INSTALLMENTS_FREQUENCY`. If we add the value of `ONEOFF` and `INSTALLMENTS` columns, we will get the same value with the PURCHASES column.
 
-<img src="Images/heatmap.svg" alt="Spearman Heatmap" width=600 height=600/>
+<img src="Images/heatmap.svg" alt="Heatmap"/>
 
 ## Identify Missing Values, Duplicates, and Outlier 
 - There is no duplicate on this dataset.
@@ -121,13 +123,20 @@ There are 313 missing values on `MINIMUM_PAYMENTS` and 1 missing value on `CREDI
 ---
 
 # V. Customer Segmentation Modeling and Analysis
-In the modeling process we tried several base models to clusters
 
 ## Clustering Algorithms
 For the modeling process, we used 3 clustering algorithms as below: 
 - K-Means
-- Agglomerative 
+- Agglomerative
+  - Single Linkage Clustering
+  - Complete Linkage Clustering
+  - Average Linkage Clustering
+  - Ward Linkage Clustering
 - Gaussian Mixture Models (GMM)
+  - Tied
+  - Spherical
+  - Full
+  - Diag
 
 ## Evaluation Metrics
 The main evaluation metrics that we used are **Silhouette Score** and **WCSS (Within-Cluster Sum of Square)**. We can applied silhouette score to evaluate any clustering results and WCSS only to evaluate K-Means clustering results. Silhouette score values range from -1 to 1 and here is the interpretation of 1, 0, and -1.
@@ -147,6 +156,7 @@ We want to create clustering model that has high interpretability. We only focus
 7. Predict the test set labels outcome with the selected classification machine learning model and make sure it has good evaluation score
 8. Generate the feature_importances from the model and analyze it for each cluster algorithm
 
+
 <img src="Images/feature_importances.svg" alt="Features Importances"/>
 
 Based on features selection results, we selected 3 features that have significant impact on defining credit card customers cluster:
@@ -154,12 +164,11 @@ Based on features selection results, we selected 3 features that have significan
 - `BALANCE`
 - `PAYMENTS`
 
-We create a new segmentation using K-Means, Agglomerative Clustering, and Gaussian Mixture Models
+We create a new cluster using K-Means, Agglomerative Clustering, and Gaussian Mixture Models
 
 ## Cluster Analysis
 Below is the clustering visualization result using **Agglomerative Clustering (Ward Linkage)**:<br>
 <img src="Images/scatter_matrix.svg" alt="Scatter Matrix Ward"/>
-[PCA 2D Visualization]
 <img src="Images/3d_viz.png" alt="3D Visualization"/>
 
 From cluster resuls above, we can conclude:
