@@ -12,12 +12,12 @@ Source : <a href="https://www.kaggle.com/arjunbhasin2013/ccdata">Credit Card Dat
 ## 1. Background and Problem Statement
 Credit card business competition is very tight. Customers can easily switch to another credit card that has lower overall fees. According to <a href="https://www.dbmarketing.com/articles/Art175.htm">How to Retain a Credit Card Customer</a>, it costs about $80 to get a new credit card customer who would returns about $120 a year in profit to the company only if they keep the card. If he drops the card after a few weeks or doesn't use the card, the company will lose the customer acquisition cost (CAC) plus some more money when trying to reactivate them. In addition, Financial Publishing Services also state in their <a href="https://www.fpsc.com/The_Cost_of_Customer_Churn.pdfresearch">research</a> that CAC is estimated at five times the rate of retaining existing ones. It clearly shows that every credit card issuer must put their best effort to retain their customers. The right retention strategy can increase the company's chances of retaining its customers and further reduce the estimated loss that will be cover by the company. 
 
-Customer loyalty is a key factor to keep. We can increase the loyalty of our customers by understanding their needs first. Personalization can give better results for customer retention
+Customer loyalty is one of a key factor to keep the customers loyal to our company. <a href="https://sendpulse.com/support/glossary/customer-loyalty">Why is customer loyalty is important?</a> Customer loyalty is important because; repeat customers spend more than first-time customers, loyal customers produce higher conversion rates, it boosts profits, retaining an existing customer is cheaper than acquiring a new one, customer loyalty helps in effective planning, loyal customer shop regularly, repeat customers spend more during the holiday.
+Customer loyalty is one of a key factor to keep the customers loyal to our company. <a href="https://sendpulse.com/support/glossary/customer-loyalty">Customer loyalty</a> is important because; repeat customers spend more than first-time customers, loyal customers produce higher conversion rates, it boosts profits, retaining an existing customer is cheaper than acquiring a new one, customer loyalty helps in effective planning, loyal customer shop regularly, repeat customers spend more during the holiday.
+
+We can <a href="https://sendpulse.com/support/glossary/customer-loyalty">increase the loyalty</a> of our customers by reward loyal customers with a loyalty program, make customer care a priority for the brand, boost customer experience by introducing VIP tiers, segment and personalize your clients, send event-based emails, optimize the businesses' referral program, encourage customers to give feedback and act on it. We can measure our customer loyalty based on lifetime value, churn rate, referrals, and net promoter code. 
 
 PWDK Bank is one of the credit card issuers in USA. Currently the company only has one type of credit card. In order to serve customers better, the company plan to release new types of credit card based on customer's needs. In this project, we position ourselves as part of the Data Scientist team at PWDK Bank. We were assigned to the marketing division to segment credit card users based on credit card usage in the last 6 months. 
-
-Bagaimana segmentasi pengguna kartu kredit dapat?
-Apa manfaat segmentasi terhadap pengembangan produk kartu kredit? 
   
 ## 2. Business Objective
 
@@ -145,7 +145,7 @@ The main evaluation metrics that we used are **Silhouette Score** and **WCSS (Wi
 - -1 : Means clusters are assigned in the wrong way
 
 ## Features Selection
-We want to create clustering model that has high interpretability. We only focused on some features that have significant impact to the cluster results. by checking the importance of each features to each clusters.
+We want to build a model that has high interpretability, so feature selection can be done to reduce the model complexity. Selected features will have significant impact to the cluster results. Feature selection was done in the following procedures:
 
 1. Cluster the dataset using all features and evaluate the clustering results for each cluster algorithm
 2. Select the optimal number of cluster for each cluster algorithm
@@ -156,7 +156,7 @@ We want to create clustering model that has high interpretability. We only focus
 7. Predict the test set labels outcome with the selected classification machine learning model and make sure it has good evaluation score
 8. Generate the feature_importances from the model and analyze it for each cluster algorithm
 
-
+We used the **Random Forest** model as a multi-class classification model and the model gave the following results:
 <img src="Images/feature_importances.svg" alt="Features Importances"/>
 
 Based on features selection results, we selected 3 features that have significant impact on defining credit card customers cluster:
@@ -164,19 +164,40 @@ Based on features selection results, we selected 3 features that have significan
 - `BALANCE`
 - `PAYMENTS`
 
-We create a new cluster using K-Means, Agglomerative Clustering, and Gaussian Mixture Models
+The following are the comparison of silhouette scores for each algorithm within a range number of cluster:<br>
+ <img src="Images/evaluations.png" alt="Evaluation Results"/>
+ - **Single Linkage**, **Complete Linkage**, and **Average Linkage** are excluded from the model selection process. Although their cluster results produce very high silhouette scores, the distribution of cluster membership is very unrealistic. For example, single linkage clustering will create 3 clusters with 8947 members in cluster 0, 1 member in cluster 1, and 1 member in cluster 2.
+ - The cluster results from **Full Covariance GMM**, **Spherical Covariance GMM**, and **Diag Covariance GMM** do not produce good silhouette scores, so we also exclude them from the model selection process.
+ - Generally, silhouette score decreases when the customers are segmented into 4 clusters. Within 3 clusters, **Ward Linkage** has better silhouette score (0.546) compared to **K-Means** (0.519) and **Tied Covariance GMM** (0.508). We decided to choose Ward Linkage that segment customer into 3 clusters as the final model.
 
 ## Cluster Analysis
-Below is the clustering visualization result using **Agglomerative Clustering (Ward Linkage)**:<br>
+Based on the results of the silhouette score and the visualization of the separation between clusters, we choose the Ward Linkage as the final cluster model. To be able to interpret the behavior characteristics of each cluster, we made several visualizations as follows:
+- Clusters visualization in 2D and 3D
+- Boxplot (exclude outliers)
+
 <img src="Images/scatter_matrix.svg" alt="Scatter Matrix Ward"/>
 <img src="Images/3d_viz.png" alt="3D Visualization"/>
+<img src="Images/boxplot_cluster.svg" alt="Boxplot Cluster Results"/>
 
-From cluster resuls above, we can conclude:
-- **CLUSTER 0**: This cluster consist of 80% credit card customers who have **LOW `BALANCES`**, **LOW `PAYMENTS`**, and **LOW `CREDIT_LIMIT`**.
+From visualizations above, we can conclude that:
+### **CLUSTER 0 (LOW SPENDERS)**
+This cluster consist of 80% credit card customers who have **LOW `BALANCES`**, **LOW `PAYMENTS`**, and **LOW `CREDIT_LIMIT`**.
+- `BALANCE`: 0 – 4000
+- `CREDIT_LIMIT`: 0 – 10000
+- `PAYMENTS`: 0 – 4000
 
-- **CLUSTER 1**: This cluster consist of 80% credit card customers who have LOW `BALANCES`, LOW `PAYMENTS`, and LOW `CREDIT_LIMIT`.
-- **CLUSTER 2**: This cluster consist of 80% credit card customers who have LOW `BALANCES`, LOW `PAYMENTS`, and LOW `CREDIT_LIMIT`.
+### **CLUSTER 1 (MEDIUM SPENDERS)**
+This cluster consist of 18% credit card customers who have **LOW-MEDIUM `BALANCES`**, **MEDIUM `PAYMENTS`**, and **MEDIUM `CREDIT_LIMIT`**
+- `BALANCE`: 0 – 13000
+- `CREDIT_LIMIT`: 2500 – 17500
+- `PAYMENTS`: 0 – 10000
+
+### **CLUSTER 2 (HIGH SPENDERS)**
+This cluster consist of 2% credit card customers who have **LOW-HIGH `BALANCES`**, **HIGH `PAYMENTS`**, and **HIGH `CREDIT_LIMIT`**
+- `BALANCE`: 0 – 14000
+- `CREDIT_LIMIT`: 3000 – 25000
+- `PAYMENTS`: 7000 – 35000
 
 ---
- 
+
 # VI. Recommendation
