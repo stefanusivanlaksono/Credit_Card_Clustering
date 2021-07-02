@@ -201,3 +201,22 @@ This cluster consist of 2% credit card customers who have **LOW-HIGH `BALANCES`*
 ---
 
 # VI. Recommendation
+## Credit Card Product
+### PWDK Silver Credit Card
+- Maximum credit limit value around \$9.000 to \$10.000
+- Annual fees **LOW** or can be waived
+- Rewards:
+    - Cash back **LOW** (prioritize for purchasing daily necessities (product from supermarket and restaurant))
+### PWDK Gold Credit Card
+- Maximum credit limit value around \$16.000 to \$18.000
+- Annual fees **MEDIUM**
+- Rewards:
+    - Cash back **MEDIUM**
+    - Travel miles points **LOW** for each credit card usage
+### PWDK Platinum Credit Card
+- Maximum credit limit value around \$22.000 (there is a high possibility that the bank will increase this value to much higher value according to customer payment capability)
+- Annual fees **HIGH**
+- Rewards:
+    - Cash back **HIGH** (offers cash back for purchasing high value products)
+    - Travel miles points **HIGH** for each credit card usage
+    - Free premium service at the airport
