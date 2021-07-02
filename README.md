@@ -9,37 +9,31 @@ Source : <a href="https://www.kaggle.com/arjunbhasin2013/ccdata">Credit Card Dat
 ---
 
 # I. Business Understanding
-## 1. Background and Problem Statement
+## Background and Problem Statement
 Credit card business competition is very tight. Customers can easily switch to another credit card that has lower overall fees. According to <a href="https://www.dbmarketing.com/articles/Art175.htm">How to Retain a Credit Card Customer</a>, it costs about $80 to get a new credit card customer who would returns about $120 a year in profit to the company only if they keep the card. If he drops the card after a few weeks or doesn't use the card, the company will lose the customer acquisition cost (CAC) plus some more money when trying to reactivate them. In addition, Financial Publishing Services also state in their <a href="https://www.fpsc.com/the_cost_of_customer_churn.pdf">research</a> that CAC is estimated at five times the rate of retaining existing ones. It clearly shows that every credit card issuer must put their best effort to retain their customers. The right retention strategy can increase the company's chances of retaining its customers and further reduce the estimated loss that will be cover by the company. 
 
 Customer loyalty is one of a key factor to keep the customers loyal to our company. <a href="https://sendpulse.com/support/glossary/customer-loyalty">Why is customer loyalty is important?</a> Customer loyalty is important because; repeat customers spend more than first-time customers, loyal customers produce higher conversion rates, it boosts profits, retaining an existing customer is cheaper than acquiring a new one, customer loyalty helps in effective planning, loyal customer shop regularly, repeat customers spend more during the holiday.
-Customer loyalty is one of a key factor to keep the customers loyal to our company. <a href="https://sendpulse.com/support/glossary/customer-loyalty">Customer loyalty</a> is important because; repeat customers spend more than first-time customers, loyal customers produce higher conversion rates, it boosts profits, retaining an existing customer is cheaper than acquiring a new one, customer loyalty helps in effective planning, loyal customer shop regularly, repeat customers spend more during the holiday.
 
 We can <a href="https://sendpulse.com/support/glossary/customer-loyalty">increase the loyalty</a> of our customers by reward loyal customers with a loyalty program, make customer care a priority for the brand, boost customer experience by introducing VIP tiers, segment and personalize your clients, send event-based emails, optimize the businesses' referral program, encourage customers to give feedback and act on it. We can measure our customer loyalty based on lifetime value, churn rate, referrals, and net promoter code. 
 
-PWDK Bank is one of the credit card issuers in USA. Currently the company only has one type of credit card. In order to serve customers better, the company plan to release new types of credit card based on customer's needs. In this project, we position ourselves as part of the Data Scientist team at PWDK Bank. We were assigned to the marketing division to segment credit card users based on credit card usage in the last 6 months. 
-  
-## 2. Business Objective
+PWDK Bank is one of the credit card issuers in USA. Currently the company only has one type of credit card. In order to serve customers better, the company plan to release new types of credit card based on customer's needs. In this project, we position ourselves as part of the Data Scientist team at PWDK Bank. We were assigned to the marketing division to segment credit card users based on credit card usage in the last six months. 
+
+## Business Objective
 
 The business objectives that we want to achieve through this project are as follows:
 - Create credit card customer segmentations based on their credit card usage.
 - Provide information and suggestion for credit card development based on customer segmentation result
 
-## 3. Data Requirements
+## Data Availability
 
-The target we set is customer segmentation based on their transaction behavior. The information needed to create a cluster is their transaction using a credit card in the past few months. For example, their credit limit, balance, purchases, one off purchases, installment purchases, payments, minimum payments, etc.
+The data owned by the company is limited to credit card users only. We will use the information from their credit card usage behavior like credit limit, balance, purchases, and payments from the last six months.
 
-## 4. Analytic Approach
-### Machine Learning Techniques
-Since we don't know the cluster or the label yet then this problem can be addressed as Unsupervised Learning. Unsupervised learning here to be more specific is about clustering. We will enter the data into the program, then based on some algorithm the program will try to group it which will then return some data clusters. 
+## Analytic Approach
+Unsupervised learning becomes our machine learning model to address this issue since it didn't have labels. The cleaned dataset will be trained into the unsupervised learning model and the model will generate customer segmentation. The goodness of cluster resulted by the model will be evaluated using clustering evaluation metrics like silhouette scores and within-cluster sum of square (WCSS).
 
-### Risk
-There are two possible risks that may be caused by incorrect predictions of the ML model:
-- The first scenario is when we group customers to a lower level when they should be in a higher cluster level. This can cause the bank to lose the opportunity to make a profit. i.e. if customers are at a higher level, they tend to spend more money which leads to company profits. Or, it can lead to customer churn if they see a competitor offering a better profit.
-- The second scenario is when customers are grouped at a higher level when they should be at a lower level. This can cause the Bank to suffer losses if the customer cannot pay his credit card. Or it can lead the company to opportunity loss if the customers didn't use the money.
-
-### Performance Measure
-Performance measures for evaluating the ML model are WCSS (Within Cluster Sum of Squares) and silhouette scores.
+Incorrect segmentation can lead to two possible losses for the bank:
+- The first scenario is when we segment customers to a lower cluster when they should be in a higher segment. This scenario can cause the bank to lose the opportunity to make more profits since they tend to spend more money and increase. It also increase the probability of a customer to churn.
+- The second scenario is when customers are grouped at a higher segment when they should be at a lower segment. This issue can cause the company to suffer losses if the customer cannot pay his credit card bill or an opportunity loss if the customer didn't fully utilize the balance in their credit card.
 
 ---
 
