@@ -180,19 +180,19 @@ Based on the results of the silhouette score and the visualization of the separa
 <img src="Images/boxplot_cluster.svg" alt="Boxplot Cluster Results"/>
 
 From visualizations above, we can conclude that:
-### **CLUSTER 0 (LOW SPENDERS)**
+#### **CLUSTER 0 (LOW SPENDERS)**
 This cluster consist of 80% credit card customers who have **LOW `BALANCES`**, **LOW `PAYMENTS`**, and **LOW `CREDIT_LIMIT`**.
 - `BALANCE`: 0 – 4000
 - `CREDIT_LIMIT`: 0 – 10000
 - `PAYMENTS`: 0 – 4000
 
-### **CLUSTER 1 (MEDIUM SPENDERS)**
+#### **CLUSTER 1 (MEDIUM SPENDERS)**
 This cluster consist of 18% credit card customers who have **LOW-MEDIUM `BALANCES`**, **MEDIUM `PAYMENTS`**, and **MEDIUM `CREDIT_LIMIT`**
 - `BALANCE`: 0 – 13000
 - `CREDIT_LIMIT`: 2500 – 17500
 - `PAYMENTS`: 0 – 10000
 
-### **CLUSTER 2 (HIGH SPENDERS)**
+#### **CLUSTER 2 (HIGH SPENDERS)**
 This cluster consist of 2% credit card customers who have **LOW-HIGH `BALANCES`**, **HIGH `PAYMENTS`**, and **HIGH `CREDIT_LIMIT`**
 - `BALANCE`: 0 – 14000
 - `CREDIT_LIMIT`: 3000 – 25000
