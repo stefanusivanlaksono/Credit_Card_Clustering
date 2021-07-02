@@ -156,7 +156,7 @@ We want to build a model that has high interpretability, so feature selection ca
 7. Predict the test set labels outcome with the selected classification machine learning model and make sure it has good evaluation score
 8. Generate the feature_importances from the model and analyze it for each cluster algorithm
 
-We used the **Random Forest** model as a multi-class classification model and the model gave the following results:
+We used the **Random Forest** model as a multi-class classification model and the model gave the following results:<br>
 <img src="Images/feature_importances.svg" alt="Features Importances"/>
 
 Based on features selection results, we selected 3 features that have significant impact on defining credit card customers cluster:
